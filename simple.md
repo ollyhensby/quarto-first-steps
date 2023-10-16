@@ -1,22 +1,3 @@
----
-title: "First Steps to Quarto"
-format:
- pdf:
-    documentclass: report
-    template-partials:
-      - before-body.tex
-      - toc.tex
-    include-in-header:
-     - text: |
-          \usepackage[sfdefault]{carlito}
-          \usepackage[a4paper, total={184.6mm, 271.6mm}]{geometry} % Set the page size
-          \usepackage{scrlayer-scrpage}
-          \lofoot{MAX FORDHAM}
-          \rofoot{\thepage}
-          
-jupyter: python3
----
-
 ## Heading 2
 
 ### Heading 3
@@ -42,14 +23,26 @@ Had 'em.
 
 By Strickland Gillilan
 
+{{< pagebreak >}}
+
 ## Images
 
 ![Some red dot](images/some_red_dot.png){width=30mm}
 
 
+::: {layout-ncol=3}
+![A Radiator](images/radiator.jpg){width=30mm}
+
+![Another radiator](images/radiator-2.jpg){width=30mm}
+
+![Look at that, another radiator!](images/radiator-3.jpg){width=30mm}
+:::
+
+{{< pagebreak >}}
+
 ## Tables
 
-| foo            | bar            |
+| **foo**        | **bar**        |
 |----------------|----------------|
 | baz            | bim            |
 | test test test | bim            |
@@ -67,42 +60,10 @@ By Strickland Gillilan
 | baz            | test test test |
 | baz            | bim            |
 
-: A long table. {tbl-colwidths="[50,50]"}
-
-+-----------+--------------------+
-| Fruit     | Advantages         |
-+===========+====================+
-| Bananas   | - built-in wrapper |
-|           | - bright color     |
-+-----------+--------------------+
-| Oranges   | - cures scurvy     |
-|           | - tasty            |
-+-----------+--------------------+
-
 : Sample grid table. {tbl-colwidths="[50,50]"}
 
-
-
 +-----------+--------------------+
-| Fruit     | Advantages         |
-+===========+====================+
-| Bananas   | - built-in wrapper |
-|           | - bright color     |
-+-----------+--------------------+
-| Oranges   | - cures scurvy     |
-|           | - tasty            |
-+-----------+--------------------+
-
-: Sample grid table. {tbl-colwidths="[50,50]"}
-
-+:---------------------------------------:+:-----------------------------------------:+:------------------------------------------:+
-| ![RAD](images/radiator.jpg){width=30mm} | ![RAD](images/radiator-2.jpg){width=30mm} |  ![RAD](images/radiator-3.jpg){width=30mm} |
-+-----------------------------------------+-------------------------------------------+--------------------------------------------+
-
-: Images in a table. {tbl-colwidths="[33,33,33]"}
-
-+-----------+--------------------+
-| Fruit     | Advantages         |
+| **Fruit** | **Advantages**     |
 +===========+====================+
 | Bananas   | - built-in wrapper |
 |           | - bright color     |
@@ -152,23 +113,5 @@ By Strickland Gillilan
 | Oranges   | - cures scurvy     |
 |           | - tasty            |
 +-----------+--------------------+
-| Bananas   | - built-in wrapper |
-|           | - bright color     |
-+-----------+--------------------+
-| Oranges   | - cures scurvy     |
-|           | - tasty            |
-+-----------+--------------------+
-| Bananas   | - built-in wrapper |
-|           | - bright color     |
-+-----------+--------------------+
-| Oranges   | - cures scurvy     |
-|           | - tasty            |
-+-----------+--------------------+
-| Bananas   | - built-in wrapper |
-|           | - bright color     |
-+-----------+--------------------+
-| Oranges   | - cures scurvy     |
-|           | - tasty            |
-+-----------+--------------------+
 
-: A long grid table. {tbl-colwidths="[50,50]"}
+: {tbl-colwidths="[30,70]"}
