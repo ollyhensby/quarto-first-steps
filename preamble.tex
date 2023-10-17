@@ -1,0 +1,47 @@
+% SET FONT TO CARLITO
+\usepackage[sfdefault]{carlito}
+
+% SET PAGE MARGINS
+\areaset{170mm}{260mm}
+
+% ADD PAGE NUMBER AND HEADER NAME TO FOOTER
+\usepackage{scrlayer-scrpage}
+\usepackage{titleref}
+\makeatletter
+\newcommand*{\currentname}{\TR@currentTitle}
+\makeatother
+\lofoot{\currentname}
+\cofoot{}
+\rofoot{\thepage}
+
+% REMOVE FIGURE AND TABLE LABELS
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}
+\captionsetup[longtable]{labelformat=empty}
+
+% ADDS A LINE BETWEEN TABLES
+\usepackage{ctable} % for \specialrule command
+\newcommand{\projectNumberCode}{CODE }
+\newcommand{\projectName}{Project Name }
+\newcommand{\coreSystemName}{Core Name }
+\newcommand{\bt}[1]{\fcolorbox{gray}{lightgray}{#1}}
+\defaultfontfeatures{Extension = .otf}
+\usepackage{fontawesome}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{glossaries}
+\setglossarystyle{altlistgroup}
+\usepackage{xparse}
+\usepackage{lscape}
+\makenoidxglossaries
+\usepackage{etoolbox}
+\usepackage{xstring}
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\renewcommand{\arraystretch}{1.2}
+\makeatletter
+\patchcmd{\LT@array}{\@mkpream{#2}}{\StrGobbleLeft{#2}{2}[\pream]\StrGobbleRight{\pream}{2}[\pream]\StrSubstitute{\pream}{l}{|l}[\pream]\@mkpream{@{}\pream|@{}}}{}{}
+\apptocmd{\LT@tabularcr}{\specialrule{0.05em}{0em}{0em}}{}{}
+\makeatother
