@@ -60,3 +60,23 @@
         \node at (current bounding box.center) {\thepage\ / \pageref*{LastPage}};
     \end{tikzpicture}
     }
+
+% SET MAXFORDHAM BACKGROUND
+\usepackage{wallpaper}
+\ThisCenterWallPaper{}{../../images/mf_background.png}
+
+% STYLE FRONTMATTER
+% Renew maketitle command
+\makeatletter
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\vspace*{\fill}
+\begin{tabular}{l}
+    \Huge{\textbf{\@title}}\\[10pt] % title
+    \huge{\ifdefined\@subtitle{\@subtitle}}\\[10pt] % subtitle
+    \@author\\ % author
+    \@date\\ % date
+\end{tabular}
+\vspace*{\fill}
+\egroup
+}
+\makeatother
