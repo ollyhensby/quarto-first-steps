@@ -39,7 +39,7 @@
 
 % ADD PAGE NUMBER AND HEADER NAME TO FOOTER
 \usepackage{scrlayer-scrpage}
-\renewcommand{\chapterpagestyle}{scrheadings}
+\renewcommand{\chapterpagestyle}{scrheadings} % Change style of chapter pages
 \usepackage{titleref}
 \usepackage{lastpage}
 \usepackage{stackengine}
@@ -52,6 +52,8 @@
 \def\stackalignment{l}
 \lofoot{\stackanchor{\stackanchor{\raggedleft{\thetitle}}{\raggedleft{\thesubtitle}}}{\raggedleft{\currentname}}}
 \cofoot{}
+% CENTRE TEXT IN IMAGE
+% https://stackoverflow.com/a/62283887
 \rofoot{    
     \begin{tikzpicture}
         \node at (0,0) {\includegraphics[width=1.75cm]{../../images/mf_footer_logo.png}};
