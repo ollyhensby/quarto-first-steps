@@ -7,12 +7,23 @@ format:
     documentclass: scrreprt
     include-in-header:
      - text: |
+          % SET FONT TO CARLITO
           \usepackage[sfdefault]{carlito}
+
+          % SET PAGE MARGINS
           \areaset{170mm}{260mm}
+
+          % ADD PAGE NUMBER AND HEADER NAME TO FOOTER
           \usepackage{scrlayer-scrpage}
-          \lofoot{MAX FORDHAM}
+          \usepackage{titleref}
+          \makeatletter
+          \newcommand*{\currentname}{\TR@currentTitle}
+          \makeatother
+          \lofoot{\currentname}
           \cofoot{}
           \rofoot{\thepage}
+
+          % REMOVE FIGURE AND TABLE LABELS
           \usepackage{caption}
           \captionsetup[figure]{labelformat=empty}
           \captionsetup[longtable]{labelformat=empty}
@@ -42,7 +53,6 @@ format:
           \makeatletter
           \patchcmd{\LT@array}{\@mkpream{#2}}{\StrGobbleLeft{#2}{2}[\pream]\StrGobbleRight{\pream}{2}[\pream]\StrSubstitute{\pream}{l}{|l}[\pream]\@mkpream{@{}\pream|@{}}}{}{}
           \apptocmd{\LT@tabularcr}{\specialrule{0.05em}{0em}{0em}}{}{}
-          % \apptocmd{\LT@tabularcr}{\hline}{}{}
           \makeatother
     template-partials:
       - before-body.tex
