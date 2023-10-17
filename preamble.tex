@@ -2,22 +2,7 @@
 \usepackage[sfdefault]{carlito}
 
 % SET PAGE MARGINS
-\areaset{170mm}{250mm}
-
-% ADD PAGE NUMBER AND HEADER NAME TO FOOTER
-\usepackage{scrlayer-scrpage}
-\usepackage{titleref}
-\usepackage{lastpage}
-\usepackage{stackengine}
-\makeatletter
-\def\title#1{\gdef\@title{#1}\gdef\thetitle{#1}} % Create call \thetitle which will get the title defined in the preamble
-\def\subtitle#1{\gdef\@subtitle{#1}\gdef\thesubtitle{#1}} % Create call \thesubtitle which will get the subtitle defined in the preamble
-\newcommand*{\currentname}{\TR@currentTitle} % Create call \currentname which will get the current section name
-\makeatother
-\def\stackalignment{l}
-\lofoot{\stackanchor{\stackanchor{\raggedleft{\thetitle}}{\raggedleft{\thesubtitle}}}{\raggedleft{\currentname}}}
-\cofoot{}
-\rofoot{\thepage\ / \pageref*{LastPage}}
+\areaset{170mm}{240mm}
 
 % REMOVE FIGURE AND TABLE LABELS
 \usepackage{caption}
@@ -51,3 +36,25 @@
 \patchcmd{\LT@array}{\@mkpream{#2}}{\StrGobbleLeft{#2}{2}[\pream]\StrGobbleRight{\pream}{2}[\pream]\StrSubstitute{\pream}{l}{|l}[\pream]\@mkpream{@{}\pream|@{}}}{}{}
 \apptocmd{\LT@tabularcr}{\specialrule{0.05em}{0em}{0em}}{}{}
 \makeatother
+
+% ADD PAGE NUMBER AND HEADER NAME TO FOOTER
+\usepackage{scrlayer-scrpage}
+\renewcommand{\chapterpagestyle}{scrheadings}
+\usepackage{titleref}
+\usepackage{lastpage}
+\usepackage{stackengine}
+\usepackage{tikz}
+\makeatletter
+\def\title#1{\gdef\@title{#1}\gdef\thetitle{#1}} % Create call \thetitle which will get the title defined in the preamble
+\def\subtitle#1{\gdef\@subtitle{#1}\gdef\thesubtitle{#1}} % Create call \thesubtitle which will get the subtitle defined in the preamble
+\newcommand*{\currentname}{\TR@currentTitle} % Create call \currentname which will get the current section name
+\makeatother
+\def\stackalignment{l}
+\lofoot{\stackanchor{\stackanchor{\raggedleft{\thetitle}}{\raggedleft{\thesubtitle}}}{\raggedleft{\currentname}}}
+\cofoot{}
+\rofoot{    
+    \begin{tikzpicture}
+        \node at (0,0) {\includegraphics[width=1.75cm]{../../images/mf_footer_logo.png}};
+        \node at (current bounding box.center) {\thepage\ / \pageref*{LastPage}};
+    \end{tikzpicture}
+    }
