@@ -53,7 +53,7 @@
 \lofoot{\stackanchor{\stackanchor{\raggedleft{\thetitle}}{\raggedleft{\thesubtitle}}}{\raggedleft{\currentname}}}
 \cofoot{}
 % CENTRE TEXT IN IMAGE
-% https://stackoverflow.com/a/62283887
+% REF: https://stackoverflow.com/a/62283887
 \rofoot{    
     \begin{tikzpicture}
         \node at (0,0) {\includegraphics[width=1.75cm]{../../images/mf_footer_logo.png}};
@@ -61,6 +61,7 @@
     \end{tikzpicture}
     }
 
+% TITLEPAGE
 % SET MAXFORDHAM BACKGROUND
 \usepackage{wallpaper}
 \ThisCenterWallPaper{}{../../images/mf_background.png}
@@ -70,11 +71,12 @@
 % and added white padding to the image itself
 
 % STYLE FRONTMATTER
+% REF: 
 % Renew maketitle command
 \makeatletter
 \renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
-\vspace*{\fill}
-\begin{tabular}{l}
+\vspace*{\fill} % To centre in the middle of the page
+\begin{tabular}{l} % Create table and left-align
     \Huge{\textbf{\@title}}\\[10pt] % title
     \huge{\ifdefined\@subtitle{\@subtitle}}\\[10pt] % subtitle
     \@author\\ % author
