@@ -2,17 +2,22 @@
 \usepackage[sfdefault]{carlito}
 
 % SET PAGE MARGINS
-\areaset{170mm}{260mm}
+\areaset{170mm}{250mm}
 
 % ADD PAGE NUMBER AND HEADER NAME TO FOOTER
 \usepackage{scrlayer-scrpage}
 \usepackage{titleref}
+\usepackage{lastpage}
+\usepackage{stackengine}
 \makeatletter
-\newcommand*{\currentname}{\TR@currentTitle}
+\def\title#1{\gdef\@title{#1}\gdef\thetitle{#1}} % Create call \thetitle which will get the title defined in the preamble
+\def\subtitle#1{\gdef\@subtitle{#1}\gdef\thesubtitle{#1}} % Create call \thesubtitle which will get the subtitle defined in the preamble
+\newcommand*{\currentname}{\TR@currentTitle} % Create call \currentname which will get the current section name
 \makeatother
-\lofoot{\currentname}
+\def\stackalignment{l}
+\lofoot{\stackanchor{\stackanchor{\raggedleft{\thetitle}}{\raggedleft{\thesubtitle}}}{\raggedleft{\currentname}}}
 \cofoot{}
-\rofoot{\thepage}
+\rofoot{\thepage\ / \pageref*{LastPage}}
 
 % REMOVE FIGURE AND TABLE LABELS
 \usepackage{caption}
