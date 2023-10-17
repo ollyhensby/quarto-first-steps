@@ -10,4 +10,3 @@ format:
     template-partials:
       - before-body.tex
       - toc.tex
-      - tables.tex
