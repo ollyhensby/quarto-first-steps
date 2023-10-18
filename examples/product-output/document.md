@@ -54,12 +54,12 @@ Fordham LLP\
 ::::
 
 \newpage
-\tableofcontents
+\toc
 \newpage
 
 ## DX-O-1 - Fan Coil Units
 
-_\hyperlink{toc}{TOC}_ __Fan Coil Units - Pr_70_65_03_29__
+_[\hyperlink{toc}{TOC}]_ Fan Coil Units - Pr_70_65_03_29
 
 ::: {layout-ncol=3}
 ![A fan coil unit](../../images/fcu.jpg){width=30mm}

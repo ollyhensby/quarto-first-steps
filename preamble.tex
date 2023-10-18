@@ -88,3 +88,12 @@
 \egroup
 }
 \makeatother
+
+% DEFINE \toc COMMAND
+% Make hyperlinks in table of contents black (default is blue)
+\makeatletter
+\newcommand{\toc}
+    {\hypersetup{linkcolor=black}
+    \tableofcontents
+    \hypersetup{linkcolor=blue}}
+\makeatother

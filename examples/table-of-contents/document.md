@@ -3,7 +3,7 @@
 This page should be before the table of contents.
 
 \newpage
-\tableofcontents
+\toc
 \newpage
 
 ## Test text

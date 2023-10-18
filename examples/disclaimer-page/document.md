@@ -54,7 +54,7 @@ Fordham LLP\
 ::::
 
 \newpage
-\tableofcontents
+\toc
 \newpage
 
 ## TEST
