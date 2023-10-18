@@ -1,4 +1,4 @@
-:::: {layout="[ 30, -5, 65 ]"}
+:::: {layout="[ 26.5, -2.5, 71 ]"}
 
 ::: {#first-column}
 \addcontentsline{toc}{section}{Document Information}
@@ -17,9 +17,9 @@ Registered office:\
 London NW1 7PE\                           
 This report is for the private and\       
 confidential use of the clients for\      
-whom the report is undertaken and\        
-should not be reproduced in whole or\     
-in part or relied upon by third parties\  
+whom the report is undertaken and\     
+should not be reproduced in whole or\
+in part or relied upon by third parties\
 for any use whatsoever without the\       
 express written authority of Max\         
 Fordham LLP\                              
@@ -29,26 +29,26 @@ Fordham LLP\
 
 ::: {#second-column}
 ### Issue History
-| date       | revision   | status code   | status description         | issue notes   |
-|:-----------|:-----------|:--------------|:---------------------------|:--------------|
-| 06 OCT 23  | C01        | S4            | Suitable for Stage Approval |               |
-| 28 JUL 23  | 1          | S1            | Suitable for Coordination  |               |
+| date      | rev | status | description                 | issue notes |
+|:----------|:----|:-------|:----------------------------|:------------|
+| 06 OCT 23 | C01 | S4     | Suitable for Stage Approval |             |
+| 28 JUL 23 | 1   | S1     | Suitable for Coordination   |             |
 
-: {tbl-colwidths="[20,10,10,30,30]"}
+: {tbl-colwidths="[17.5,5,7.5,25,45]"}
 
 ### Contributions
-| name   | role             |      
-|:-------|:-----------------|      
-| BM     | Project Engineer |      
+| name | role             |
+|:-----|:-----------------|
+| BM   | Project Engineer |
 
 : {tbl-colwidths="[30,70]"}
 
 ### Notes
-| index   | notes   |  
-|---------|---------|  
-| 1.      | Notes   |  
+|    |                                                  |
+|----|--------------------------------------------------|
+| 1. | this is a long important note about the schedule |
 
-: {tbl-colwidths="[30,70]"}
+: {tbl-colwidths="[4,96]"}
 :::
 
 ::::
@@ -57,9 +57,11 @@ Fordham LLP\
 \toc
 \newpage
 
+
 ## DX-O-1 - Fan Coil Units
 
 _[\hyperlink{toc}{TOC}]_ Fan Coil Units - Pr_70_65_03_29
+
 
 ::: {layout-ncol=3}
 ![A fan coil unit](../../images/fcu.jpg){width=30mm}
