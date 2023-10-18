@@ -9,4 +9,3 @@ format:
       - preamble.tex
     template-partials:
       - before-body.tex
-      - toc.tex
