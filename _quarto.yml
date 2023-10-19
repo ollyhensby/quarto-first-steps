@@ -1,7 +1,3 @@
-title: "First Steps to Quarto"
-subtitle: "Some examples"
-author: "Max Fordham"
-date: 2023-10-16
 format:
   pdf:
     documentclass: scrreprt

@@ -48,12 +48,12 @@
 \usepackage{stackengine}
 \usepackage{tikz}
 \makeatletter
-\def\title#1{\gdef\@title{#1}\gdef\thetitle{#1}} % Create call \thetitle which will get the title defined in the preamble
-\def\subtitle#1{\gdef\@subtitle{#1}\gdef\thesubtitle{#1}} % Create call \thesubtitle which will get the subtitle defined in the preamble
+% \def\title#1{\gdef\@title{#1}\gdef\thetitle{#1}} % Create call \thetitle which will get the title defined in the preamble
+% \def\subtitle#1{\gdef\@subtitle{#1}\gdef\thesubtitle{#1}} % Create call \thesubtitle which will get the subtitle defined in the preamble
 \newcommand*{\currentname}{\TR@currentTitle} % Create call \currentname which will get the current section name
 \makeatother
 \def\stackalignment{l}
-\lofoot{\stackanchor{\stackanchor{\raggedleft{\thetitle}}{\raggedleft{\thesubtitle}}}{\raggedleft{\currentname}}}
+\lofoot{\stackanchor{\stackanchor{\raggedleft{$${{< var project_name >}}$$}}{\raggedleft{$${{< var document_description >}}$$}}}{\raggedleft{\currentname}}}
 \cofoot{}
 % CENTRE TEXT IN IMAGE
 % REF: https://stackoverflow.com/a/62283887
@@ -80,10 +80,13 @@
 \renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
 \vspace*{\fill} % To centre in the middle of the page
 \begin{tabular}{l} % Create table and left-align
-    \Huge{\textbf{\@title}}\\[10pt] % title
-    \huge{\ifdefined\@subtitle{\@subtitle}}\\[10pt] % subtitle
-    \@author\\ % author
-    \@date\\ % date
+    % Note that the $$ is used to escape the Hugo variables
+    % Without them it does not work when wrapping with e.g. \textbf, etc
+    \Huge{\textbf{$${{< var project_name >}}$$}}\\[10pt]
+    \huge{$${{< var document_description >}}$$}\\[10pt]
+    \Large{$${{< var issue_history.status_description >}}$$}\\
+    \large{$${{< var issue_history.date >}}$$}\\
+    \large{$${{< var document_name >}}$$}\\
 \end{tabular}
 \vspace*{\fill}
 \egroup
