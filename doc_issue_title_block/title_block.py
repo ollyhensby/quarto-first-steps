@@ -1,4 +1,5 @@
 import pathlib
+import PIL
 from textwrap import wrap
 from reportlab.lib import colors
 from reportlab.lib.units import mm, inch
@@ -6,7 +7,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Table, Image, TableStyle, SimpleDocTemplate, TopPadder
-
+from reportlab.pdfgen import canvas
 
 ###FONTS###
 ###Register Callibri fonts###
@@ -27,6 +28,7 @@ pdfmetrics.registerFont(TTFont("Calibri-Bold-Italics", TTFFILE))
 def create_styling(number_of_cols: int) -> list:
     style = [
         ('BACKGROUND', (0, 0), (1, -1), colors.black),
+        ('BACKGROUND', (2, 0), (-1, -1), colors.white),
         ('VALIGN', (0, 0), (0, -1), 'MIDDLE'),
         ('LINEABOVE', (0, 0), (-1, 0), 3, colors.black),
         ('LINEBELOW', (0, -1), (-1, -1), 3, colors.black),
@@ -96,7 +98,6 @@ def create_title_block_table(data: list):
 def build_title_block_pdf(fpth: pathlib.Path):
     data = construct_title_block_data()
     title_block_table = create_title_block_table(data)
-    margin = 0.25*inch
     doc = SimpleDocTemplate(
         str(fpth), 
         pagesize=A4,
@@ -109,6 +110,35 @@ def build_title_block_pdf(fpth: pathlib.Path):
     doc.build(elements)
 
 
+def set_background(canvas: canvas, doc: SimpleDocTemplate):
+    FPTH_MF_TITLE = pathlib.Path(__file__).parent / "mf-title.png"
+    image = PIL.Image.open(FPTH_MF_TITLE)
+    mf_title_width, mf_title_height = image.size
+
+    FPTH_MF_BACKGROUND = pathlib.Path(__file__).parent / "mf-background.png"
+    image = PIL.Image.open(FPTH_MF_BACKGROUND)
+    mf_background_width, mf_background_height = image.size
+    a4_image_ratio = A4[1] / mf_background_height
+    canvas.saveState()
+    canvas.drawImage(FPTH_MF_BACKGROUND, x=150, y=0, width=mf_background_width*a4_image_ratio, height=A4[1])
+    canvas.drawImage(FPTH_MF_TITLE, x=540, y=400, width=0.5*mf_title_width, height=0.5*mf_title_height, mask="auto")
+    canvas.restoreState()
+
+
+def build_schedule_title_page_template_pdf(fpth: pathlib.Path):
+    data = construct_title_block_data()
+    title_block_table = create_title_block_table(data)
+    doc = SimpleDocTemplate(
+        str(fpth), 
+        pagesize=A4,
+        leftMargin=0.25*inch,
+        rightMargin=0.25*inch,
+        bottomMargin=0.5*inch, 
+        topMargin=inch
+        )
+    elements = [TopPadder(title_block_table)]
+    doc.build(elements, onFirstPage=set_background)
 
 if __name__ == "__main__":
     build_title_block_pdf(pathlib.Path(__file__).parent / "title_block.pdf")
+    build_schedule_title_page_template_pdf(pathlib.Path(__file__).parent / "schedule.pdf")
