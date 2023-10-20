@@ -1,11 +1,11 @@
 import pathlib
 from textwrap import wrap
 from reportlab.lib import colors
-from reportlab.lib.units import mm
+from reportlab.lib.units import mm, inch
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import Table, Image, TableStyle, SimpleDocTemplate
+from reportlab.platypus import Table, Image, TableStyle, SimpleDocTemplate, TopPadder
 
 
 ###FONTS###
@@ -36,12 +36,12 @@ def create_styling(number_of_cols: int) -> list:
     ]
     for i in range(number_of_cols):
         if i%2 == 0:
-            style.append(('FONT', (0, i), (-1, i), "Calibri", 8))
+            style.append(('FONT', (0, i), (-1, i), "Calibri", 7))
             style.append(('TEXTCOLOR', (0, i), (-1, i), colors.gray))
             style.append(('VALIGN', (1, i), (-1, i), 'BOTTOM'))
             style.append(('BOTTOMPADDING', (0, i), (-1, i), 0))
         else:
-            style.append(('FONT', (0, i), (-1, i), "Calibri-Bold", 11))
+            style.append(('FONT', (0, i), (-1, i), "Calibri-Bold", 12))
             style.append(('TEXTCOLOR', (0, i), (-1, i), colors.black))
             style.append(('VALIGN', (1, i), (-1, i), 'TOP'))
             style.append(('TOPPADDING', (0, i), (-1, i), 0))
@@ -49,8 +49,8 @@ def create_styling(number_of_cols: int) -> list:
 
 def get_title_block_image(fpth_img: pathlib.Path) -> Image:
     image = Image(fpth_img)
-    image.drawHeight = 30*mm * image.drawHeight/image.drawWidth
-    image.drawWidth = 30*mm
+    image.drawHeight = 28*mm * image.drawHeight/image.drawWidth
+    image.drawWidth = 28*mm
     return image
 
 def construct_title_block_data() -> list[list]:
@@ -63,8 +63,8 @@ def construct_title_block_data() -> list[list]:
         "job_number": "J4321",
         "project_leader": "OH",
         "document_name": "06667-MXF-XX-XX-SH-M-20003",
-        "document_description": "A description of the document that is important t what is happening and do something that we can do more with and then jump around a bit and see what this description",
-        "name_nomenclature": "project code-originator-volume-level-type-role-number",
+        "document_description": "A description of the document that is important",
+        "name_nomenclature": "project-originator-volume-level-type-role-number",
         "revision": "P01",
         "status_code": "S2",
         "status_description": "Suitable for information"
@@ -96,16 +96,18 @@ def create_title_block_table(data: list):
 def build_title_block_pdf(fpth: pathlib.Path):
     data = construct_title_block_data()
     title_block_table = create_title_block_table(data)
+    margin = 0.25*inch
     doc = SimpleDocTemplate(
         str(fpth), 
         pagesize=A4,
-        leftMargin=0,
-        rightMargin=0,
-        bottomMargin=0, 
-        topMargin=0
+        leftMargin=0.25*inch,
+        rightMargin=0.25*inch,
+        bottomMargin=0.5*inch, 
+        topMargin=inch
         )
-    elements = [title_block_table]
+    elements = [TopPadder(title_block_table)]
     doc.build(elements)
+
 
 
 if __name__ == "__main__":
