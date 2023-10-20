@@ -60,7 +60,7 @@ def get_title_block_image(fpth_img: pathlib.Path) -> Image:
 def construct_title_block_data(project_info: dict) -> list[list]:
     """Using the project information, layout the data in preparation to be styled
     correctly by ReportLab."""
-    dt = datetime.strptime("2020-01-02", '%Y-%m-%d')
+    dt = datetime.strptime(project_info["date"], '%Y-%m-%d')
     FPTH_MF_CIRCLE_IMG = pathlib.Path(__file__).parent / "mf-circle.png"
     image = get_title_block_image(fpth_img=FPTH_MF_CIRCLE_IMG)
     issue_date = dt.strftime("%d/%m/%Y")
@@ -68,7 +68,7 @@ def construct_title_block_data(project_info: dict) -> list[list]:
     name_nomenclature = project_info["name_nomenclature"].replace("-", " - ")
     document_name = project_info["document_name"].replace("-", " - ")
     data = [
-        [image, "", "project", "", "", "", "", "document title", "", "", "", ""],
+        [image, "", "project", "", "", "", "", "document description", "", "", "", ""],
         ["", "", project_info["project_name"], "", "", "", "", document_description, "", "", "", ""],
         ["", "", "job number", "project leader", "issue date", "", "", "", "", "", "", ""],
         ["", "", project_info["job_number"], project_info["project_leader"], issue_date, "", "", "", "", "", "", ""],
@@ -136,7 +136,7 @@ def build_schedule_title_page_template_pdf(project_info: dict, fpth_output: path
 
 if __name__ == "__main__":
     project_info = {
-        "project_name": "University of Oxford, Humanities Building",
+        "project_name": "A Max Fordham Project",
         "job_number": "J4321",
         "project_leader": "OH",
         "document_name": "06667-MXF-XX-XX-SH-M-20003",
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         "revision": "P01",
         "status_code": "S2",
         "status_description": "Suitable for information",
-        "date": "2020-01-02"
+        "date": "2023-10-20"
     }
-    build_title_block_pdf(project_info=project_info, fpth_output=pathlib.Path(__file__).parent / "title_block.pdf")
-    build_schedule_title_page_template_pdf(project_info=project_info, fpth_output=pathlib.Path(__file__).parent / "schedule.pdf")
+    build_title_block_pdf(project_info=project_info, fpth_output=pathlib.Path(__file__).parent / "title-block.pdf")
+    build_schedule_title_page_template_pdf(project_info=project_info, fpth_output=pathlib.Path(__file__).parent / "schedule-title-page.pdf")
