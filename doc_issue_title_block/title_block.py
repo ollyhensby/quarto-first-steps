@@ -1,5 +1,6 @@
-import pathlib
 import PIL
+import pathlib
+from datetime import datetime
 from textwrap import wrap
 from reportlab.lib import colors
 from reportlab.lib.units import mm, inch
@@ -9,8 +10,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Table, Image, TableStyle, SimpleDocTemplate, TopPadder
 from reportlab.pdfgen import canvas
 
-###FONTS###
-###Register Callibri fonts###
+# Register Callibri fonts
 FDIR_FONTS = pathlib.Path(__file__).parent / "fonts"
 TTFFILE = FDIR_FONTS / "calibri.ttf"
 pdfmetrics.registerFont(TTFont("Calibri", TTFFILE))
@@ -26,6 +26,7 @@ TTFFILE = FDIR_FONTS  / "calibrib.ttf" #Bold Italics
 pdfmetrics.registerFont(TTFont("Calibri-Bold-Italics", TTFFILE))
 
 def create_styling(number_of_cols: int) -> list:
+    """Create Max Fordham styling for ReportLab table."""
     style = [
         ('BACKGROUND', (0, 0), (1, -1), colors.black),
         ('BACKGROUND', (2, 0), (-1, -1), colors.white),
@@ -50,30 +51,19 @@ def create_styling(number_of_cols: int) -> list:
     return style
 
 def get_title_block_image(fpth_img: pathlib.Path) -> Image:
+    """Get the image that will be used within the title block."""
     image = Image(fpth_img)
     image.drawHeight = 28*mm * image.drawHeight/image.drawWidth
     image.drawWidth = 28*mm
     return image
 
-def construct_title_block_data() -> list[list]:
-    d = "01"
-    m = "01"
-    y = "23"
-
-    project_info = {
-        "project_name": "University of Oxford, Humanities Building",
-        "job_number": "J4321",
-        "project_leader": "OH",
-        "document_name": "06667-MXF-XX-XX-SH-M-20003",
-        "document_description": "A description of the document that is important",
-        "name_nomenclature": "project-originator-volume-level-type-role-number",
-        "revision": "P01",
-        "status_code": "S2",
-        "status_description": "Suitable for information"
-    }
+def construct_title_block_data(project_info: dict) -> list[list]:
+    """Using the project information, layout the data in preparation to be styled
+    correctly by ReportLab."""
+    dt = datetime.strptime("2020-01-02", '%Y-%m-%d')
     FPTH_MF_CIRCLE_IMG = pathlib.Path(__file__).parent / "mf_circle.png"
     image = get_title_block_image(fpth_img=FPTH_MF_CIRCLE_IMG)
-    issue_date = d + "/" + m + "/" + y
+    issue_date = dt.strftime("%d/%m/%Y")
     document_description = "\n".join(wrap(project_info["document_description"], 45))
     name_nomenclature = project_info["name_nomenclature"].replace("-", " - ")
     document_name = project_info["document_name"].replace("-", " - ")
@@ -89,17 +79,20 @@ def construct_title_block_data() -> list[list]:
 
 
 def create_title_block_table(data: list):
+    """Create the ReportLab table and set the styling."""
     table = Table(data, colWidths='*')
     styling = create_styling(len(data))
     table.setStyle(TableStyle(styling))
     return table
 
 
-def build_title_block_pdf(fpth: pathlib.Path):
-    data = construct_title_block_data()
-    title_block_table = create_title_block_table(data)
+def build_title_block_pdf(project_info: dict, fpth_output: pathlib.Path):
+    """Build a PDF with just the Max Fordham title block at the bottom of an
+    A4 page."""
+    data = construct_title_block_data(project_info=project_info)
+    title_block_table = create_title_block_table(data=data)
     doc = SimpleDocTemplate(
-        str(fpth), 
+        str(fpth_output), 
         pagesize=A4,
         leftMargin=0.25*inch,
         rightMargin=0.25*inch,
@@ -111,6 +104,7 @@ def build_title_block_pdf(fpth: pathlib.Path):
 
 
 def set_background(canvas: canvas, doc: SimpleDocTemplate):
+    """Create function that will set the Max Fordham background."""
     FPTH_MF_TITLE = pathlib.Path(__file__).parent / "mf-title.png"
     image = PIL.Image.open(FPTH_MF_TITLE)
     mf_title_width, mf_title_height = image.size
@@ -125,11 +119,12 @@ def set_background(canvas: canvas, doc: SimpleDocTemplate):
     canvas.restoreState()
 
 
-def build_schedule_title_page_template_pdf(fpth: pathlib.Path):
-    data = construct_title_block_data()
-    title_block_table = create_title_block_table(data)
+def build_schedule_title_page_template_pdf(project_info: dict, fpth_output: pathlib.Path):
+    """Build a PDF with a title block and the Max Fordham background."""
+    data = construct_title_block_data(project_info=project_info)
+    title_block_table = create_title_block_table(data=data)
     doc = SimpleDocTemplate(
-        str(fpth), 
+        str(fpth_output), 
         pagesize=A4,
         leftMargin=0.25*inch,
         rightMargin=0.25*inch,
@@ -140,5 +135,17 @@ def build_schedule_title_page_template_pdf(fpth: pathlib.Path):
     doc.build(elements, onFirstPage=set_background)
 
 if __name__ == "__main__":
-    build_title_block_pdf(pathlib.Path(__file__).parent / "title_block.pdf")
-    build_schedule_title_page_template_pdf(pathlib.Path(__file__).parent / "schedule.pdf")
+    project_info = {
+        "project_name": "University of Oxford, Humanities Building",
+        "job_number": "J4321",
+        "project_leader": "OH",
+        "document_name": "06667-MXF-XX-XX-SH-M-20003",
+        "document_description": "A description of the document that is important",
+        "name_nomenclature": "project-originator-volume-level-type-role-number",
+        "revision": "P01",
+        "status_code": "S2",
+        "status_description": "Suitable for information",
+        "date": "2020-01-02"
+    }
+    build_title_block_pdf(project_info=project_info, fpth_output=pathlib.Path(__file__).parent / "title_block.pdf")
+    build_schedule_title_page_template_pdf(project_info=project_info, fpth_output=pathlib.Path(__file__).parent / "schedule.pdf")
