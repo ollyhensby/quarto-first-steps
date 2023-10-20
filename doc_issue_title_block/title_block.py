@@ -61,7 +61,7 @@ def construct_title_block_data(project_info: dict) -> list[list]:
     """Using the project information, layout the data in preparation to be styled
     correctly by ReportLab."""
     dt = datetime.strptime("2020-01-02", '%Y-%m-%d')
-    FPTH_MF_CIRCLE_IMG = pathlib.Path(__file__).parent / "mf_circle.png"
+    FPTH_MF_CIRCLE_IMG = pathlib.Path(__file__).parent / "mf-circle.png"
     image = get_title_block_image(fpth_img=FPTH_MF_CIRCLE_IMG)
     issue_date = dt.strftime("%d/%m/%Y")
     document_description = "\n".join(wrap(project_info["document_description"], 45))
